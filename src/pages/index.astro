@@ -49,8 +49,8 @@ const iconesPilares = ['escudo', 'ferramenta', 'rota'] as const;
     </div>
   </section>
 
-  <section class="faixa-aut topo" aria-label="KeepTrack em números">
-    <div class="container"><FaixaAutoridade numeros={home.numeros} /></div>
+  <section class="faixa-aut" aria-label="KeepTrack em números">
+    <div class="container"><div class="faixa-card topo"><FaixaAutoridade numeros={home.numeros} /></div></div>
   </section>
 
   <!-- DOIS CAMINHOS --------------------------------------------------------->
@@ -71,6 +71,7 @@ const iconesPilares = ['escudo', 'ferramenta', 'rota'] as const;
             <h3>Treinamentos 4x4</h3>
             <p>Técnicas de condução fora de estrada para iniciantes e experientes, em grupo, personalizado ou para empresas.</p>
             <span class="link-seta">Ver treinamentos</span>
+            <span class="caminho-seta" aria-hidden="true"><Icone nome="seta" /></span>
           </div>
         </a>
         <a class="caminho" href="/viagens/">
@@ -80,6 +81,7 @@ const iconesPilares = ['escudo', 'ferramenta', 'rota'] as const;
             <h3>Viagens & Expedições</h3>
             <p>Roteiros off-road guiados pelo Brasil e pela América do Sul, com comboio, carro de apoio e equipe experiente.</p>
             <span class="link-seta">Ver viagens</span>
+            <span class="caminho-seta" aria-hidden="true"><Icone nome="seta" /></span>
           </div>
         </a>
       </div>
@@ -218,7 +220,7 @@ const iconesPilares = ['escudo', 'ferramenta', 'rota'] as const;
 
 <style>
   /* Hero */
-  .hero { position: relative; isolation: isolate; min-height: min(88vh, 760px); display: flex; align-items: flex-end; color: #e6ecf8; overflow: hidden; background: var(--azul-escuro); }
+  .hero { position: relative; isolation: isolate; min-height: min(94vh, 860px); display: flex; align-items: flex-end; color: #e6ecf8; overflow: hidden; background: var(--azul-escuro); }
   .hero-foto { position: absolute; inset: 0; z-index: -1; }
   .hero-foto :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; }
   .hero-foto::after {
@@ -227,8 +229,12 @@ const iconesPilares = ['escudo', 'ferramenta', 'rota'] as const;
       linear-gradient(90deg, rgb(18 29 61 / .92) 0%, rgb(18 29 61 / .72) 42%, rgb(18 29 61 / .15) 75%),
       linear-gradient(0deg, rgb(18 29 61 / .9) 0%, transparent 45%);
   }
-  .hero-conteudo { padding-block: clamp(72px, 12vw, 140px) clamp(40px, 6vw, 72px); }
-  .hero h1 { color: #fff; max-width: 15ch; margin-bottom: .35em; }
+  .hero-conteudo { padding-block: clamp(72px, 12vw, 140px) clamp(120px, 12vw, 170px); }
+  .hero h1 { color: #fff; max-width: 14ch; margin-bottom: .3em; text-shadow: 0 2px 30px rgb(0 0 0 / .25); }
+  .hero h1, .hero-sub, .hero-botoes, .chip-turma, .hero .eyebrow { animation: subir .9s var(--ease) both; }
+  .hero-sub { animation-delay: .08s; } .hero-botoes { animation-delay: .16s; } .chip-turma { animation-delay: .24s; }
+  @keyframes subir { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero h1, .hero-sub, .hero-botoes, .chip-turma, .hero .eyebrow { animation: none; } }
   .hero-sub { font-size: clamp(1.1rem, 1.7vw, 1.3rem); max-width: 52ch; margin-bottom: 2rem; }
   .hero-botoes { display: flex; flex-wrap: wrap; gap: .8rem; }
   .chip-turma {
@@ -241,15 +247,25 @@ const iconesPilares = ['escudo', 'ferramenta', 'rota'] as const;
   .chip-data { width: 52px; height: 52px; border-radius: 50%; background: var(--azul); display: grid; place-content: center; text-align: center; font-family: var(--f-titulo); text-transform: uppercase; font-size: .72rem; letter-spacing: .06em; line-height: 1; }
   .chip-data strong { font-size: 1.35rem; display: block; }
 
-  .faixa-aut { background: var(--azul-escuro); padding-block: clamp(20px, 3vw, 36px); border-top: 1px solid rgb(255 255 255 / .08); }
+  .faixa-aut { position: relative; z-index: 2; margin-top: calc(-1 * clamp(70px, 8vw, 100px)); }
+  .faixa-card {
+    background: linear-gradient(135deg, #24397a 0%, var(--azul-escuro) 60%);
+    border-radius: var(--raio-g); padding: clamp(.4rem, 1.5vw, 1rem) clamp(1.2rem, 3vw, 2.4rem);
+    box-shadow: var(--sombra-forte), inset 0 0 0 1px rgb(255 255 255 / .08); overflow: hidden;
+  }
 
   /* Caminhos */
   .caminhos { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.4vw, 28px); }
-  .caminho { position: relative; display: block; aspect-ratio: 5 / 4; border-radius: var(--raio-g); overflow: hidden; color: #fff; text-decoration: none; isolation: isolate; }
+  .caminho { position: relative; display: block; aspect-ratio: 5 / 4; border-radius: calc(var(--raio-g) + 4px); overflow: hidden; color: #fff; text-decoration: none; isolation: isolate; box-shadow: var(--sombra); transition: box-shadow .4s, transform .4s var(--ease); }
+  .caminho:hover { box-shadow: var(--sombra-forte); transform: translateY(-4px); }
+  .caminho-seta { position: absolute; right: clamp(1.4rem, 3vw, 2.4rem); bottom: clamp(1.4rem, 3vw, 2.4rem); width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .14); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .25); transition: background-color .3s, transform .3s var(--ease); }
+  .caminho-seta :global(svg) { width: 22px; }
+  .caminho:hover .caminho-seta { background: var(--azul); transform: rotate(-45deg); }
+  .caminho .link-seta { display: none; }
   .caminho :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .7s; }
   .caminho::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgb(18 29 61 / .95) 0%, rgb(18 29 61 / .45) 50%, rgb(18 29 61 / .1) 100%); }
   .caminho:hover :global(img) { transform: scale(1.05); }
-  .caminho-texto { position: absolute; left: 0; right: 0; bottom: 0; padding: clamp(1.4rem, 3vw, 2.4rem); }
+  .caminho-texto { position: absolute; left: 0; right: 0; bottom: 0; padding: clamp(1.4rem, 3vw, 2.4rem); padding-right: calc(clamp(1.4rem, 3vw, 2.4rem) + 64px); }
   .caminho-num { font-family: var(--f-titulo); font-weight: 700; color: #9fb6e6; letter-spacing: .14em; }
   .caminho h3 { color: #fff; font-size: clamp(1.9rem, 3.4vw, 2.8rem); margin: .2rem 0 .4rem; }
   .caminho p { max-width: 42ch; color: #dfe6f5; }
@@ -260,17 +276,18 @@ const iconesPilares = ['escudo', 'ferramenta', 'rota'] as const;
 
   /* Pilares */
   .pilares { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 40px); }
-  .pilares li { border-top: 2px solid var(--azul); padding-top: 1.5rem; }
-  .pilar-icone { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: rgb(63 104 185 / .22); color: #b8caf0; margin-bottom: 1.1rem; }
+  .pilares li { padding: clamp(1.4rem, 2.5vw, 2rem); border-radius: var(--raio-g); background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px var(--borda-vidro); backdrop-filter: blur(6px); transition: background-color .3s, transform .3s var(--ease); }
+  .pilares li:hover { background: rgb(255 255 255 / .08); transform: translateY(-3px); }
+  .pilar-icone { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: linear-gradient(135deg, var(--azul), #2c4f97); color: #fff; margin-bottom: 1.3rem; box-shadow: 0 10px 20px -10px rgb(63 104 185 / .8); }
   .pilar-icone :global(svg) { width: 28px; }
   .pilares h3 { font-size: 1.7rem; }
   .pilares p { color: #c5d0ea; margin: 0; }
   .frota { margin-top: clamp(40px, 5vw, 64px); padding: 1.5rem 1.6rem; border: 1px solid rgb(255 255 255 / .14); border-radius: var(--raio-g); display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: center; }
   .frota-titulo { font-family: var(--f-titulo); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: #fff; margin: 0; font-size: 1.1rem; }
   .frota ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
-  .frota li { padding: .3em .8em; border-radius: 999px; background: rgb(255 255 255 / .08); font-size: .95rem; color: #dfe6f5; }
+  .frota li { padding: .35em .9em; border-radius: 999px; background: rgb(255 255 255 / .08); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); font-size: .95rem; color: #dfe6f5; }
 
-  .aviso-agenda { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; padding: 1.3rem 1.5rem; margin-bottom: clamp(24px, 3vw, 40px); background: var(--bege); border-radius: var(--raio-g); }
+  .aviso-agenda { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; padding: 1.3rem 1.5rem; margin-bottom: clamp(24px, 3vw, 40px); background: var(--bege); border-radius: var(--raio-g); box-shadow: inset 0 0 0 1px var(--bege-2); }
   .aviso-agenda > :global(svg) { width: 36px; color: var(--azul); flex: none; }
   .aviso-agenda p { margin: 0; flex: 1 1 320px; }
 
@@ -297,7 +314,7 @@ const iconesPilares = ['escudo', 'ferramenta', 'rota'] as const;
     .hero { min-height: 0; }
     .hero-foto :global(img) { object-position: 70% 50%; }
     .hero-foto::after { background: linear-gradient(0deg, rgb(18 29 61 / .96) 15%, rgb(18 29 61 / .55) 70%, rgb(18 29 61 / .35) 100%); }
-    .hero-conteudo { padding-top: 180px; }
+    .hero-conteudo { padding-top: 180px; padding-bottom: 110px; }
     .hero-botoes .btn { flex: 1 1 100%; }
   }
 </style>

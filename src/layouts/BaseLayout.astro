@@ -50,6 +50,11 @@ if (imagem) {
   }
 }
 const preload = preloadImagem ? resolverImagem(preloadImagem) : undefined;
+// Preload da foto do topo (LCP) com o mesmo srcset AVIF que o <Foto> gera
+const preloadLocal =
+  preload && typeof preload !== 'string'
+    ? await getImage({ src: preload, widths: [400, 640, 800, 1024, 1280, 1600].filter((w) => w <= preload.width), format: 'avif', quality: 72 })
+    : undefined;
 
 const grafo = {
   '@context': 'https://schema.org',
@@ -89,6 +94,7 @@ const grafo = {
 
   <link rel="preload" href={fonteTitulo} as="font" type="font/woff2" crossorigin />
   {typeof preload === 'string' && <link rel="preload" as="image" href={preload} fetchpriority="high" />}
+  {preloadLocal && <link rel="preload" as="image" type="image/avif" imagesrcset={preloadLocal.srcSet.attribute} imagesizes="100vw" fetchpriority="high" />}
 
   <!-- Consent Mode v2: tudo negado até o visitante escolher (antes de qualquer tag) -->
   <script is:inline define:vars={{ gtm: site.gtmId }}>

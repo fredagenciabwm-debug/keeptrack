@@ -30,7 +30,7 @@ const larguras = preview
       width={largura}
       height={Math.round(largura * 0.5625)}
       loading={prioridade ? 'eager' : 'lazy'}
-      decoding={prioridade ? 'sync' : 'async'}
+      decoding={prioridade ? 'auto' : 'async'}
       fetchpriority={prioridade ? 'high' : 'auto'}
       class={classe}
     />
@@ -44,7 +44,7 @@ const larguras = preview
       fallbackFormat={preview ? "webp" : "jpg"}
       quality={72}
       loading={prioridade ? 'eager' : 'lazy'}
-      decoding={prioridade ? 'sync' : 'async'}
+      decoding={prioridade ? 'auto' : 'async'}
       fetchpriority={prioridade ? 'high' : 'auto'}
       class={classe}
     />

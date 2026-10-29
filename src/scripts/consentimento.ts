@@ -3,7 +3,12 @@
  * O "consent default = denied" fica inline no <head> (BaseLayout), antes de qualquer tag.
  * Este arquivo é carregado sob demanda, depois que a página fica ociosa.
  */
-import 'vanilla-cookieconsent/dist/cookieconsent.css';
+// CSS do banner carregado só quando o banner é carregado (não bloqueia a primeira pintura)
+import cssBanner from 'vanilla-cookieconsent/dist/cookieconsent.css?url';
+const linkCss = document.createElement('link');
+linkCss.rel = 'stylesheet';
+linkCss.href = cssBanner;
+document.head.appendChild(linkCss);
 import * as CookieConsent from 'vanilla-cookieconsent';
 
 declare global {
