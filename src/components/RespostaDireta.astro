@@ -1,0 +1,14 @@
+---
+// Bloco "Resposta direta" (AEO): resumo factual de 40–60 palavras no topo da página
+interface Props { texto: string; rotulo?: string }
+const { texto, rotulo = 'Em resumo' } = Astro.props;
+---
+<aside class="resposta" aria-label={rotulo}>
+  <p class="rotulo">{rotulo}</p>
+  <p class="texto">{texto}</p>
+</aside>
+<style>
+  .resposta { background: var(--bege); border-left: 5px solid var(--azul); border-radius: 0 var(--raio-g) var(--raio-g) 0; padding: 1.4rem 1.6rem; }
+  .rotulo { font-family: var(--f-titulo); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; font-size: .9rem; color: var(--azul); margin: 0 0 .4rem; }
+  .texto { margin: 0; font-size: 1.12rem; line-height: 1.55; color: var(--tinta); }
+</style>
